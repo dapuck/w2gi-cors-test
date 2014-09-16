@@ -1,8 +1,38 @@
 <html>
   <head>
     <title>W2GI CORS</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+      (function($){
+        var url = "http://hosted.where2stageit.com/ajax";
+        var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
+        var xml = "<request><appkey>" + appkey + 
+          "</appkey><formdata id=\"getlist\"><objectname>Country</objectname></formdata></request>";
+        function doRequest() {
+          $.ajax(url, {
+            data : {
+              "xml_request" : xml
+            },
+            success : function(data, status, xhr) {
+              $("#response").text(data);
+            },
+            error : function(xhr, status, err) {
+              alert(err);
+            }
+          });
+        }
+        
+        $(function(){
+          $("#doit").on("click", doRequest);
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-    <h1>Hello World</h1>
+    <h1>Hello CORS!</h1>
+    <p>Some info about CORS with W2GI</p>
+    <input type="button" id="doit" value="Make CORS Request!">
+    <h2>Response:</h2>
+    <pre id="response"></pre>
   </body>
 </html>
