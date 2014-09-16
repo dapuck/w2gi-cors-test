@@ -67,8 +67,8 @@
       (function($){
         var url = "http://api.where2stageit.com/ajax";
         var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
-        var xml = "<request><appkey>" + appkey + 
-          "</appkey><formdata id=\"getlist\"><objectname>Country</objectname></formdata></request>";
+        var xml = "&lt;request&gt;&lt;appkey&gt;" + appkey + 
+          "&lt;/appkey&gt;&lt;formdata id=\\&quot;getlist\\&quot;&gt;&lt;objectname&gt;Country&lt;/objectname&gt;&lt;/formdata&gt;&lt;/request&gt;";
         function doRequest() {
           $.ajax(url, {
             data : {
