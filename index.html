@@ -31,6 +31,7 @@
       #doc {
         float: left;
         max-width: 50%;
+        margin-right: 10px;
       }
       #req {
         float: left;
@@ -52,6 +53,45 @@
         support CORS and some have only partial support, see 
         <a href="http://caniuse.com/#feat=cors">http://caniuse.com/#feat=cors</a> 
         for more information. 
+      </p>
+      <p>
+        In this example we will use jQuery to send a prepared AJAX request to 
+        api.where2stageit.com.  All of the code shown here can also be found 
+        in the source for this page. As you can see below, this code adds an 
+        on click handler to the element “#doit” that will call the function 
+        “doRequest”. The function “doRequest” will use jQuery's “ajax” function 
+        to make the AJAX request to api.where2stageit.com, passing in the prepared 
+        xml as “xml_request”. 
+      </p>
+      <pre>
+      (function($){
+        var url = "http://api.where2stageit.com/ajax";
+        var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
+        var xml = "<request><appkey>" + appkey + 
+          "</appkey><formdata id=\"getlist\"><objectname>Country</objectname></formdata></request>";
+        function doRequest() {
+          $.ajax(url, {
+            data : {
+              "xml_request" : xml
+            },
+            success : function(data, status, xhr) {
+              $("#response").text(data.childNodes[0].outerHTML);
+            },
+            error : function(xhr, status, err) {
+              alert(err);
+            }
+          });
+        }
+        
+        $(function(){
+          $("#doit").on("click", doRequest);
+        });
+      })(jQuery);
+      </pre>
+      <p>
+        If the Appkey has been configured correctly for the domain, the response 
+        should be displayed in the element “#response”. Otherwise the error will 
+        be displayed as an alert. 
       </p>
     </div>
     <div id="req">
