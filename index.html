@@ -14,7 +14,7 @@
               "xml_request" : xml
             },
             success : function(data, status, xhr) {
-              $("#response").text(data);
+              $("#response").text(data.childNodes[0].outerHTML);
             },
             error : function(xhr, status, err) {
               alert(err);
