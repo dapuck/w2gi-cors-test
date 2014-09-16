@@ -27,14 +27,37 @@
         });
       })(jQuery);
     </script>
+    <style>
+      #doc {
+        float: left;
+        max-width: 50%;
+      }
+      #req {
+        float: left;
+        max-width: 50%;
+      }
+    </style>
   </head>
   <body>
     <h1>Hello CORS!</h1>
-    <p>
-      To make a CORS compatible
-    </p>
-    <input type="button" id="doit" value="Make CORS Request!">
-    <h2>Response:</h2>
-    <pre id="response"></pre>
+    <div id="doc">
+      <p>
+        To make a CORS compatible request to W2GI's systems you will first 
+        need to obtain a CORS enabled Appkey from W2GI (contact your account 
+        rep for more details).
+      </p>
+      <p>
+        To make the request, it is best to use a library that supports AJAX 
+        requests using CORS (like jQuery). Please note that not all browsers 
+        support CORS and some have only partial support, see 
+        <a href="http://caniuse.com/#feat=cors">http://caniuse.com/#feat=cors</a> 
+        for more information. 
+      </p>
+    </div>
+    <div id="req">
+      <input type="button" id="doit" value="Make CORS Request!">
+      <h2>Response:</h2>
+      <pre id="response"></pre>
+    </div>
   </body>
 </html>
