@@ -4,7 +4,7 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript">
       (function($){
-        var url = "http://hosted.where2stageit.com/ajax";
+        var url = "http://api.where2stageit.com/ajax";
         var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
         var xml = "<request><appkey>" + appkey + 
           "</appkey><formdata id=\"getlist\"><objectname>Country</objectname></formdata></request>";
@@ -30,7 +30,9 @@
   </head>
   <body>
     <h1>Hello CORS!</h1>
-    <p>Some info about CORS with W2GI</p>
+    <p>
+      To make a CORS compatible
+    </p>
     <input type="button" id="doit" value="Make CORS Request!">
     <h2>Response:</h2>
     <pre id="response"></pre>
