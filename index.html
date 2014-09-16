@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta name="format-detection" content="telephone=no">
     <title>W2GI CORS</title>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript">
@@ -68,7 +69,7 @@
         var url = "http://api.where2stageit.com/ajax";
         var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
         var xml = "&lt;request&gt;&lt;appkey&gt;" + appkey + 
-          "&lt;/appkey&gt;&lt;formdata id=\\&quot;getlist\\&quot;&gt;&lt;objectname&gt;Country&lt;/objectname&gt;&lt;/formdata&gt;&lt;/request&gt;";
+          "&lt;/appkey&gt;&lt;formdata id=\&quot;getlist\&quot;&gt;&lt;objectname&gt;Country&lt;/objectname&gt;&lt;/formdata&gt;&lt;/request&gt;";
         function doRequest() {
           $.ajax(url, {
             data : {
@@ -93,6 +94,7 @@
         should be displayed in the element “#response”. Otherwise the error will 
         be displayed as an alert. 
       </p>
+      <!--h2>Troubleshooting:</h2-->
     </div>
     <div id="req">
       <input type="button" id="doit" value="Make CORS Request!">
