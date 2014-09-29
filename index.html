@@ -18,7 +18,7 @@
             alert(err);
           }
           if(window.XDomainRequest) {
-            console.log("Old IE CORS");
+            //console.log("Old IE CORS");
             var xdr = new XDomainRequest();
             xdr.open("get", url + "?xml_request=" + xml);
             xdr.onprogress = function () { };
@@ -87,16 +87,32 @@
         var xml = "&lt;request&gt;&lt;appkey&gt;" + appkey + 
           "&lt;/appkey&gt;&lt;formdata id=\&quot;getlist\&quot;&gt;&lt;objectname&gt;Country&lt;/objectname&gt;&lt;/formdata&gt;&lt;/request&gt;";
         function doRequest() {
+          function success(data, status, xhr) {
+            $("#response").text(data.childNodes[0].outerHTML);
+          }
+          
+          function error(xhr, status, err) {
+            alert(err);
+          }
+          if(window.XDomainRequest) {
+            //console.log("Old IE CORS");
+            var xdr = new XDomainRequest();
+            xdr.open("get", url + "?xml_request=" + xml);
+            xdr.onprogress = function () { };
+            xdr.ontimeout = function () { };
+            xdr.onerror = error;
+            xdr.onload = function () {
+              $("#response").text(xdr.responseText);
+            };
+            setTimeout(function () {xdr.send();}, 0);
+            return;
+          }
           $.ajax(url, {
             data : {
               "xml_request" : xml
             },
-            success : function(data, status, xhr) {
-              $("#response").text(data.childNodes[0].outerHTML);
-            },
-            error : function(xhr, status, err) {
-              alert(err);
-            }
+            success : success,
+            error : error
           });
         }
         
