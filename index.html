@@ -20,7 +20,7 @@
           if(window.XDomainRequest) {
             console.log("Old IE CORS");
             var xdr = new XDomainRequest();
-            xdr.open("get", url + "xml_request=" + xml);
+            xdr.open("get", url + "?xml_request=" + xml);
             xdr.onprogress = function () { };
             xdr.ontimeout = function () { };
             xdr.onerror = error;
