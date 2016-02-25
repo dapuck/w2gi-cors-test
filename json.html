@@ -41,8 +41,8 @@
           }
           $.ajax(url, {
             method : "POST",
-            data : req,
-            contentType : "application/json",
+            data : JSON.stringify(req),
+            contentType : "text/plain",
             success : success,
             error : error
           });
