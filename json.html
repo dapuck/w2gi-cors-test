@@ -7,8 +7,6 @@
       (function($){
         var url = "http://api.where2stageit.com/rest/getlist";
         var appkey = "5BFE74E0-5A29-11E4-A796-63AA746343CC"; //"A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
-//        var xml = "<request><appkey>" + appkey + 
-//          "</appkey><formdata id=\"getlist\"><objectname>Country</objectname></formdata></request>";
         var req = {
             "request": {
                 "appkey": appkey,
@@ -20,7 +18,7 @@
         };
         function doRequest() {
           function success(data, status, xhr) {
-            $("#response").text(data.childNodes[0].outerHTML);
+            $("#response").text(JSON.stringify(data, null, 4));
           }
           
           function error(xhr, status, err) {
@@ -87,17 +85,24 @@
         on click handler to the element “#doit” that will call the function 
         “doRequest”. The function “doRequest” will use jQuery's “ajax” function 
         to make the AJAX request to api.where2stageit.com, passing in the prepared 
-        xml as “xml_request”. 
+        JSON. 
       </p>
       <pre>
       (function($){
-        var url = "http://api.where2stageit.com/ajax";
+        var url = "http://api.where2stageit.com/rest/getlist";
         var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
-        var xml = "&lt;request&gt;&lt;appkey&gt;" + appkey + 
-          "&lt;/appkey&gt;&lt;formdata id=\&quot;getlist\&quot;&gt;&lt;objectname&gt;Country&lt;/objectname&gt;&lt;/formdata&gt;&lt;/request&gt;";
+        var req = {
+            "request": {
+                "appkey": appkey,
+                "formdata": {
+                    "objectname" : "Country",
+                    "order": "name"
+                }
+            }
+        };
         function doRequest() {
           function success(data, status, xhr) {
-            $("#response").text(data.childNodes[0].outerHTML);
+            $("#response").text(JSON.stringify(data, null, 4));
           }
           
           function error(xhr, status, err) {
@@ -106,20 +111,20 @@
           if(window.XDomainRequest) {
             //console.log("Old IE CORS");
             var xdr = new XDomainRequest();
-            xdr.open("get", url + "?xml_request=" + xml);
+            xdr.open("post", url);
             xdr.onprogress = function () { };
             xdr.ontimeout = function () { };
             xdr.onerror = error;
             xdr.onload = function () {
               $("#response").text(xdr.responseText);
             };
-            setTimeout(function () {xdr.send();}, 0);
+            setTimeout(function () {xdr.send(JSON.stringify(req));}, 0);
             return;
           }
           $.ajax(url, {
-            data : {
-              "xml_request" : xml
-            },
+            method : "POST",
+            data : JSON.stringify(req),
+            contentType : "text/plain", // avoids CORS Pre-Flight
             success : success,
             error : error
           });
