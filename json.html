@@ -124,7 +124,7 @@
           $.ajax(url, {
             method : "POST",
             data : JSON.stringify(req),
-            contentType : "text/plain", // avoids CORS Pre-Flight
+            contentType : "application/json",
             success : success,
             error : error
           });
