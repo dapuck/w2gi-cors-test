@@ -1,0 +1,151 @@
+<html>
+  <head>
+    <meta name="format-detection" content="telephone=no">
+    <title>W2GI CORS</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+      (function($){
+        var url = "https://api.where2stageit.com/rest/getlist";
+        var appkey = "5BFE74E0-5A29-11E4-A796-63AA746343CC";
+        var req = {
+            "request": {
+                "appkey": appkey,
+                "formdata": {
+                    "objectname" : "Country",
+                    "order": "name"
+                }
+            }
+        };
+        function doRequest() {
+          function success(data, status, xhr) {
+            $("#response").text(JSON.stringify(data, null, 4));
+          }
+          
+          function error(xhr, status, err) {
+            alert(err);
+          }
+          if(window.XDomainRequest) {
+            //console.log("Old IE CORS");
+            var xdr = new XDomainRequest();
+            xdr.open("post", url);
+            xdr.onprogress = function () { };
+            xdr.ontimeout = function () { };
+            xdr.onerror = error;
+            xdr.onload = function () {
+              $("#response").text(xdr.responseText);
+            };
+            setTimeout(function () {xdr.send(JSON.stringify(req));}, 0);
+            return;
+          }
+          $.ajax(url, {
+            method : "POST",
+            data : JSON.stringify(req),
+            contentType : "text/plain",
+            success : success,
+            error : error
+          });
+        }
+        
+        $(function(){
+          $("#doit").on("click", doRequest);
+        });
+      })(jQuery);
+    </script>
+    <style>
+      #doc {
+        float: left;
+        max-width: 50%;
+        margin-right: 10px;
+      }
+      #req {
+        float: left;
+        max-width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello CORS!</h1>
+    <div id="doc">
+      <p>
+        To make a CORS compatible request to W2GI's systems you will first 
+        need to obtain a CORS enabled Appkey from W2GI (contact your account 
+        rep for more details).
+      </p>
+      <p>
+        To make the request, it is best to use a library that supports AJAX 
+        requests using CORS (like jQuery). Please note that not all browsers 
+        support CORS and some have only partial support, see 
+        <a href="http://caniuse.com/#feat=cors">http://caniuse.com/#feat=cors</a> 
+        for more information. 
+      </p>
+      <p>
+        In this example we will use jQuery to send a prepared AJAX request to 
+        api.where2stageit.com.  All of the code shown here can also be found 
+        in the source for this page. As you can see below, this code adds an 
+        on click handler to the element “#doit” that will call the function 
+        “doRequest”. The function “doRequest” will use jQuery's “ajax” function 
+        to make the AJAX request to api.where2stageit.com, passing in the prepared 
+        JSON. 
+      </p>
+      <pre>
+      (function($){
+        var url = "http://api.where2stageit.com/rest/getlist";
+        var appkey = "A3DEE464-3DC0-11E4-AFDD-17AF746343CC";
+        var req = {
+            "request": {
+                "appkey": appkey,
+                "formdata": {
+                    "objectname" : "Country",
+                    "order": "name"
+                }
+            }
+        };
+        function doRequest() {
+          function success(data, status, xhr) {
+            $("#response").text(JSON.stringify(data, null, 4));
+          }
+          
+          function error(xhr, status, err) {
+            alert(err);
+          }
+          if(window.XDomainRequest) {
+            //console.log("Old IE CORS");
+            var xdr = new XDomainRequest();
+            xdr.open("post", url);
+            xdr.onprogress = function () { };
+            xdr.ontimeout = function () { };
+            xdr.onerror = error;
+            xdr.onload = function () {
+              $("#response").text(xdr.responseText);
+            };
+            setTimeout(function () {xdr.send(JSON.stringify(req));}, 0);
+            return;
+          }
+          $.ajax(url, {
+            method : "POST",
+            data : JSON.stringify(req),
+            contentType : "application/json",
+            success : success,
+            error : error
+          });
+        }
+        
+        $(function(){
+          $("#doit").on("click", doRequest);
+        });
+      })(jQuery);
+      </pre>
+      <p>
+        If the Appkey has been configured correctly for the domain, the response 
+        should be displayed in the element “#response”. Otherwise the error will 
+        be displayed as an alert. 
+      </p>
+      <!--h2>Troubleshooting:</h2-->
+    </div>
+    <div id="req">
+      <input type="button" id="doit" value="Make CORS Request!">
+      <h2>Response:</h2>
+      <pre id="response"></pre>
+    </div>
+  </body>
+</html>
